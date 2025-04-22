@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="px-4 py-5 my-5 text-center">
+        <h1 class="display-5 fw-bold text-body-emphasis">FitTracker</h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">Your one-stop platform for health and fitness tracking. Monitor your calories, workouts, water intake, and more - all in one place!</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg px-4 gap-3">
+                    <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 py-5 row-cols-1 row-cols-md-3">
+        <div class="col d-flex align-items-start">
+            <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <div>
+                <h3 class="fs-2">Track Your Diet</h3>
+                <p>Log your meals, track calories and macros, and monitor your water intake. Get personalized meal suggestions based on your goals.</p>
+                <a href="{{ url_for('calories') }}" class="btn btn-outline-secondary">
+                    Nutrition Tracker
+                </a>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <i class="fas fa-dumbbell"></i>
+            </div>
+            <div>
+                <h3 class="fs-2">Workout Management</h3>
+                <p>Record your workouts, track calories burned, and view your exercise history. Get workout suggestions based on your goals.</p>
+                <a href="{{ url_for('workouts') }}" class="btn btn-outline-secondary">
+                    Workout Tracker
+                </a>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div>
+                <h3 class="fs-2">Challenges & Community</h3>
+                <p>Compete with friends, join community challenges, and earn rewards for your achievements. Stay motivated with our community features.</p>
+                <a href="{{ url_for('challenges') }}" class="btn btn-outline-secondary">
+                    Challenges
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

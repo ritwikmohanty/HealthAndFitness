@@ -1,0 +1,319 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="mb-4">Workout Tracker</h1>
+        <p class="text-muted">Log your workouts, track progress, and view your history.</p>
+    </div>
+    <div class="col-auto">
+        <div class="text-end">
+            <span class="fs-5" id="currentDate"></span>
+        </div>
+    </div>
+</div>
+
+<!-- Workout Stats Overview -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title"><i class="fas fa-fire me-2"></i>Today's Calories</h5>
+                <h2 class="mt-3" id="todayCaloriesBurned">0</h2>
+                <div class="progress mt-3" style="height: 10px;">
+                    <div class="progress-bar bg-success" id="caloriesBurnedProgress" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-muted mt-2 d-block" id="caloriesBurnedGoal">Goal: 500</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title"><i class="fas fa-clock me-2"></i>Week's Minutes</h5>
+                <h2 class="mt-3" id="weeklyWorkoutMinutes">0</h2>
+                <div class="progress mt-3" style="height: 10px;">
+                    <div class="progress-bar bg-info" id="minutesProgress" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-muted mt-2 d-block" id="weeklyMinutesGoal">Goal: 150</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title"><i class="fas fa-dumbbell me-2"></i>Week's Workouts</h5>
+                <h2 class="mt-3" id="weeklyWorkoutCount">0</h2>
+                <div class="progress mt-3" style="height: 10px;">
+                    <div class="progress-bar bg-warning" id="workoutsProgress" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-muted mt-2 d-block" id="weeklyWorkoutsGoal">Goal: 5</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title"><i class="fas fa-bolt me-2"></i>Streak</h5>
+                <h2 class="mt-3" id="workoutStreak">0</h2>
+                <div class="mt-3">
+                    <span class="badge bg-secondary" id="streakStatus">Not Started</span>
+                </div>
+                <small class="text-muted mt-2 d-block">Days in a row</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <!-- Activity Logger Card -->
+    <div class="col-md-5 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Log Workout</h5>
+            </div>
+            <div class="card-body">
+                <form id="workoutForm">
+                    <div class="mb-3">
+                        <label for="workoutType" class="form-label">Workout Type</label>
+                        <select class="form-select" id="workoutType" required>
+                            <option value="">Select workout...</option>
+                            <!-- Workout options will be added dynamically -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="workoutDate" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="workoutDate">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="duration" class="form-label">Duration (minutes)</label>
+                            <input type="number" class="form-control" id="duration" min="1" value="30" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="intensity" class="form-label">Intensity</label>
+                            <select class="form-select" id="intensity" required>
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="caloriesBurned" class="form-label">Calories Burned (estimated)</label>
+                        <input type="number" class="form-control" id="caloriesBurned" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes (optional)</label>
+                        <textarea class="form-control" id="notes" rows="2"></textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="button" class="btn btn-primary" id="logWorkoutBtn">Save Workout</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workout Log Card -->
+    <div class="col-md-7 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-list me-2"></i>Recent Workouts</h5>
+                <div class="btn-group">
+                    <button class="btn btn-sm btn-outline-secondary active" id="viewAllWorkouts">All</button>
+                    <button class="btn btn-sm btn-outline-secondary" id="viewCardio">Cardio</button>
+                    <button class="btn btn-sm btn-outline-secondary" id="viewStrength">Strength</button>
+                    <button class="btn btn-sm btn-outline-secondary" id="viewFlexibility">Flexibility</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="workoutLogContainer">
+                    <div id="noWorkoutsMessage" class="text-center py-4">
+                        <p class="text-muted">No workouts logged recently</p>
+                        <p class="small">Track your first workout to get started</p>
+                    </div>
+                    <div id="workoutLog"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <!-- Workout Suggestions -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Suggested Workouts</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="bodyPartFilter" class="form-label">Target Area</label>
+                    <select class="form-select" id="bodyPartFilter">
+                        <option value="all">All Body Parts</option>
+                        <option value="arms">Arms</option>
+                        <option value="legs">Legs</option>
+                        <option value="core">Core</option>
+                        <option value="back">Back</option>
+                        <option value="chest">Chest</option>
+                        <option value="fullbody">Full Body</option>
+                        <option value="cardio">Cardio</option>
+                    </select>
+                </div>
+                <div id="workoutSuggestions" class="mt-3">
+                    <div class="text-center py-3">
+                        <p class="text-muted">Select a body part to see suggested workouts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workout Plan -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Weekly Workout Plan</h5>
+            </div>
+            <div class="card-body">
+                <div id="workoutPlan">
+                    <div class="text-center py-3" id="noWorkoutPlan">
+                        <p class="text-muted">You don't have a workout plan yet</p>
+                        <button class="btn btn-outline-primary btn-sm" id="generatePlanBtn">
+                            <i class="fas fa-magic me-1"></i>Generate Plan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Challenge & Stats Section -->
+<div class="row mb-4">
+    <!-- Workout History Chart -->
+    <div class="col-md-8 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Workout History</h5>
+                <div>
+                    <select class="form-select form-select-sm" id="historyChartType">
+                        <option value="calories">Calories Burned</option>
+                        <option value="duration">Duration</option>
+                        <option value="workouts">Workout Types</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body">
+                <canvas id="workoutHistoryChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workout Challenge -->
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-trophy me-2"></i>Current Challenge</h5>
+            </div>
+            <div class="card-body">
+                <div id="currentWorkoutChallenge">
+                    <div class="text-center py-3" id="noChallengeMessage">
+                        <p class="text-muted">No active challenge</p>
+                        <a href="{{ url_for('challenges') }}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-trophy me-1"></i>Join a Challenge
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Generate Workout Plan Modal -->
+<div class="modal fade" id="workoutPlanModal" tabindex="-1" aria-labelledby="workoutPlanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="workoutPlanModalLabel">Create Workout Plan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="planForm">
+                    <div class="mb-3">
+                        <label class="form-label">Fitness Goal</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="fitnessGoal" id="goalLoseWeight" value="lose_weight" checked>
+                            <label class="form-check-label" for="goalLoseWeight">Lose Weight</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="fitnessGoal" id="goalBuildMuscle" value="build_muscle">
+                            <label class="form-check-label" for="goalBuildMuscle">Build Muscle</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="fitnessGoal" id="goalImproveEndurance" value="improve_endurance">
+                            <label class="form-check-label" for="goalImproveEndurance">Improve Endurance</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="fitnessGoal" id="goalGeneral" value="general_fitness">
+                            <label class="form-check-label" for="goalGeneral">General Fitness</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Workout Days Per Week</label>
+                        <div class="btn-group w-100" role="group">
+                            <input type="radio" class="btn-check" name="workoutDays" id="days3" value="3" autocomplete="off" checked>
+                            <label class="btn btn-outline-secondary" for="days3">3 days</label>
+                            
+                            <input type="radio" class="btn-check" name="workoutDays" id="days4" value="4" autocomplete="off">
+                            <label class="btn btn-outline-secondary" for="days4">4 days</label>
+                            
+                            <input type="radio" class="btn-check" name="workoutDays" id="days5" value="5" autocomplete="off">
+                            <label class="btn btn-outline-secondary" for="days5">5 days</label>
+                            
+                            <input type="radio" class="btn-check" name="workoutDays" id="days6" value="6" autocomplete="off">
+                            <label class="btn btn-outline-secondary" for="days6">6 days</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Workout Duration</label>
+                        <div class="btn-group w-100" role="group">
+                            <input type="radio" class="btn-check" name="workoutDuration" id="duration30" value="30" autocomplete="off">
+                            <label class="btn btn-outline-secondary" for="duration30">30 min</label>
+                            
+                            <input type="radio" class="btn-check" name="workoutDuration" id="duration45" value="45" autocomplete="off" checked>
+                            <label class="btn btn-outline-secondary" for="duration45">45 min</label>
+                            
+                            <input type="radio" class="btn-check" name="workoutDuration" id="duration60" value="60" autocomplete="off">
+                            <label class="btn btn-outline-secondary" for="duration60">60 min</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Equipment Available</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="equipmentGym" value="gym" checked>
+                            <label class="form-check-label" for="equipmentGym">Gym Access</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="equipmentHome" value="home" checked>
+                            <label class="form-check-label" for="equipmentHome">Home Workouts</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="createPlanBtn">Create Plan</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/workouts.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,551 @@
+/* Custom styling for fitness app */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Navbar styling */
+.navbar {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+html[data-bs-theme="dark"] .navbar {
+    background-color: #1e2124 !important;
+}
+
+html[data-bs-theme="light"] .navbar {
+    background-color: #ffffff !important;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+.nav-item {
+    position: relative;
+    margin: 0 5px;
+}
+
+.nav-link {
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 0.6rem 1rem !important;
+    transition: all 0.3s ease;
+}
+
+html[data-bs-theme="dark"] .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+html[data-bs-theme="dark"] .nav-link:hover,
+html[data-bs-theme="dark"] .nav-link.active {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-bs-theme="light"] .nav-link {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+html[data-bs-theme="light"] .nav-link:hover,
+html[data-bs-theme="light"] .nav-link.active {
+    color: #0d6efd;
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+/* Theme toggle button styling */
+#theme-toggle {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+html[data-bs-theme="dark"] #theme-toggle {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+html[data-bs-theme="light"] #theme-toggle {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+#theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Pulse animation for theme toggle */
+.theme-pulse {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--bs-danger);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+    
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(220, 53, 69, 0);
+    }
+    
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+}
+
+/* Navbar brand text */
+.brand-text {
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+html[data-bs-theme="dark"] .brand-text {
+    color: white;
+}
+
+html[data-bs-theme="light"] .brand-text {
+    color: #212529;
+}
+
+/* Light mode specific styling */
+html[data-bs-theme="light"] {
+    --card-bg: #ffffff;
+    --card-border: rgba(0, 0, 0, 0.125);
+    --text-color: #212529;
+    --text-muted: #6c757d;
+    --border-color: rgba(0, 0, 0, 0.125);
+}
+
+html[data-bs-theme="dark"] {
+    --card-bg: #2b2f33;
+    --card-border: rgba(255, 255, 255, 0.125);
+    --text-color: #f8f9fa;
+    --text-muted: #adb5bd;
+    --border-color: rgba(255, 255, 255, 0.125);
+}
+
+/* Fix for chart grid lines in light mode */
+html[data-bs-theme="light"] .chart-container canvas {
+    background-color: white;
+}
+
+/* Calories remaining box fix for light mode */
+html[data-bs-theme="light"] .card.bg-dark {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+html[data-bs-theme="light"] .text-white {
+    color: #212529 !important;
+}
+
+/* Water tracker styling */
+.water-tracker {
+    display: flex;
+    gap: 10px;
+}
+
+.water-glass {
+    width: 30px;
+    height: 40px;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+html[data-bs-theme="dark"] .water-glass {
+    background-color: var(--bs-gray-800);
+    border: 1px solid var(--bs-gray-600);
+}
+
+html[data-bs-theme="light"] .water-glass {
+    background-color: rgba(13, 202, 240, 0.1);
+    border: 1px solid rgba(13, 202, 240, 0.3);
+}
+
+.water-glass.filled {
+    background-color: var(--bs-info);
+    border-color: var(--bs-info);
+}
+
+/* Nutrient circles */
+.nutrient-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    color: white;
+    font-weight: bold;
+}
+
+/* Challenge cards */
+.challenge-card {
+    border-left: 4px solid var(--bs-primary);
+    transition: transform 0.2s;
+}
+
+.challenge-card:hover {
+    transform: translateY(-3px);
+}
+
+.challenge-card.steps {
+    border-left-color: var(--bs-info);
+}
+
+.challenge-card.calories {
+    border-left-color: var(--bs-success);
+}
+
+.challenge-card.workouts {
+    border-left-color: var(--bs-warning);
+}
+
+.challenge-card.minutes {
+    border-left-color: var(--bs-danger);
+}
+
+/* Workout suggestion cards */
+.workout-suggestion {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.workout-suggestion:hover {
+    transform: translateY(-3px);
+}
+
+/* Badges */
+.badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.badge-item {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bs-gray-700);
+    color: white;
+    border: 2px solid var(--bs-primary);
+    font-size: 1.5rem;
+}
+
+/* Food search results */
+#searchResults {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.search-result-item {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+html[data-bs-theme="dark"] .search-result-item:hover {
+    background-color: var(--bs-gray-700);
+}
+
+html[data-bs-theme="light"] .search-result-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Meal log items */
+.meal-item {
+    border-left: 3px solid var(--bs-primary);
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.meal-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.meal-item.breakfast {
+    border-left-color: var(--bs-info);
+}
+
+.meal-item.lunch {
+    border-left-color: var(--bs-success);
+}
+
+.meal-item.dinner {
+    border-left-color: var(--bs-danger);
+}
+
+.meal-item.snack {
+    border-left-color: var(--bs-warning);
+}
+
+/* Workout log items */
+.workout-item {
+    border-left: 3px solid var(--bs-primary);
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.workout-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.workout-item.cardio {
+    border-left-color: var(--bs-info);
+}
+
+.workout-item.strength {
+    border-left-color: var(--bs-danger);
+}
+
+.workout-item.flexibility {
+    border-left-color: var(--bs-success);
+}
+
+/* Achievements */
+.achievement {
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-left: 4px solid var(--bs-warning);
+    transition: all 0.3s ease;
+}
+
+html[data-bs-theme="dark"] .achievement {
+    background-color: var(--bs-gray-800);
+}
+
+html[data-bs-theme="light"] .achievement {
+    background-color: rgba(255, 193, 7, 0.05);
+    border: 1px solid rgba(255, 193, 7, 0.2);
+    border-left: 4px solid var(--bs-warning);
+}
+
+.achievement:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Weekly workout plan */
+.plan-day {
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+html[data-bs-theme="dark"] .plan-day {
+    border: 1px solid var(--bs-gray-700);
+    background-color: var(--bs-gray-800);
+}
+
+html[data-bs-theme="light"] .plan-day {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.plan-day:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.plan-day-header {
+    font-weight: bold;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+html[data-bs-theme="dark"] .plan-day-header {
+    border-bottom: 1px solid var(--bs-gray-700);
+}
+
+html[data-bs-theme="light"] .plan-day-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* Top performers list */
+.performer-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+html[data-bs-theme="dark"] .performer-row {
+    background-color: var(--bs-gray-800);
+}
+
+html[data-bs-theme="light"] .performer-row {
+    background-color: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.performer-row:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rank {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-right: 15px;
+    min-width: 30px;
+}
+
+.top-rank {
+    color: var(--bs-warning);
+}
+
+.performer-info {
+    flex: 1;
+}
+
+.performer-score {
+    font-weight: bold;
+}
+
+/* Event cards */
+.event-card {
+    border-left: 4px solid var(--bs-info);
+    margin-bottom: 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+html[data-bs-theme="dark"] .event-card {
+    background-color: var(--bs-gray-800);
+}
+
+html[data-bs-theme="light"] .event-card {
+    background-color: rgba(13, 202, 240, 0.05);
+    border: 1px solid rgba(13, 202, 240, 0.2);
+    border-left: 4px solid var(--bs-info);
+}
+
+.event-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.event-date {
+    font-size: 0.9rem;
+    color: var(--bs-gray-500);
+}
+
+.event-location {
+    font-size: 0.9rem;
+    color: var(--bs-gray-500);
+}
+
+/* Badge styling improvements */
+.badge-item {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+html[data-bs-theme="dark"] .badge-item {
+    background-color: var(--bs-gray-700);
+    border: 2px solid var(--bs-primary);
+}
+
+html[data-bs-theme="light"] .badge-item {
+    background-color: var(--bs-primary);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.badge-item:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+    
+    .navbar .dropdown-menu {
+        position: absolute;
+    }
+    
+    .badge-item {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .water-tracker {
+        flex-wrap: wrap;
+    }
+    
+    .nutrient-circle {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .performer-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .performer-score {
+        margin-top: 5px;
+    }
+}
+
+@media (max-width: 576px) {
+    .theme-text {
+        display: none;
+    }
+    
+    .badge-item {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+    
+    .plan-day {
+        padding: 8px;
+    }
+    
+    #searchResults {
+        max-height: 150px;
+    }
+}

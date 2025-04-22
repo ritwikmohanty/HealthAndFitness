@@ -1,0 +1,252 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="mb-4">Challenges & Events</h1>
+        <p class="text-muted">Compete with friends, join challenges, and track your progress.</p>
+    </div>
+    <div class="col-auto">
+        <div class="text-end">
+            <span class="fs-5" id="currentDate"></span>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-8 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-trophy me-2"></i>Your Active Challenges</h5>
+                <button class="btn btn-sm btn-primary" id="createChallengeBtn">
+                    <i class="fas fa-plus me-1"></i>Create Challenge
+                </button>
+            </div>
+            <div class="card-body">
+                <div id="activeChallengesList">
+                    <div class="text-center py-4" id="noChallengesMessage">
+                        <p class="text-muted">You're not participating in any challenges</p>
+                        <p class="small">Create or join a challenge to start competing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-medal me-2"></i>Your Rewards</h5>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <h2 id="totalPoints">0</h2>
+                    <p class="text-muted">Total Points</p>
+                </div>
+                <div class="progress mb-3" style="height: 10px;">
+                    <div class="progress-bar bg-success" id="pointsProgressBar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="mb-3 small text-muted text-center">
+                    <span id="pointsToNext">0</span> points until next reward
+                </div>
+                <h6 class="mb-3">Recent Badges</h6>
+                <div id="recentBadges">
+                    <div class="text-center py-3" id="noBadgesMessage">
+                        <p class="text-muted small">Complete challenges to earn badges</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-users me-2"></i>Friend Challenges</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="challengeFriend" class="form-label">Challenge a Friend</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="challengeFriend" placeholder="Friend's name">
+                        <button class="btn btn-outline-secondary" type="button" id="addFriendBtn">Add</button>
+                    </div>
+                </div>
+                <div id="friendsList">
+                    <div class="text-center py-3" id="noFriendsMessage">
+                        <p class="text-muted small">Add friends to challenge them</p>
+                    </div>
+                </div>
+                <hr>
+                <h6 class="mb-3">Challenge Leaderboard</h6>
+                <div id="friendLeaderboard">
+                    <div class="text-center py-3" id="noLeaderboardMessage">
+                        <p class="text-muted small">No active friend challenges</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-globe me-2"></i>Community Challenges</h5>
+                <div>
+                    <select class="form-select form-select-sm" id="challengeTypeFilter">
+                        <option value="all">All Types</option>
+                        <option value="steps">Steps</option>
+                        <option value="calories">Calories</option>
+                        <option value="workouts">Workouts</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="communityChallengesList">
+                    <div class="text-center py-4" id="noCommunityChallengesMessage">
+                        <p class="text-muted">No community challenges available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-star me-2"></i>Top Performers</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <select class="form-select" id="topPerformerCategory">
+                        <option value="steps">Steps</option>
+                        <option value="calories">Calories Burned</option>
+                        <option value="workouts">Workout Consistency</option>
+                    </select>
+                </div>
+                <div id="topPerformersList">
+                    <div class="text-center py-3">
+                        <p class="text-muted small">Loading top performers...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-calendar-day me-2"></i>Upcoming Events</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="locationFilter" placeholder="Filter by location...">
+                </div>
+                <div id="eventsFeed">
+                    <div class="text-center py-3" id="noEventsMessage">
+                        <p class="text-muted small">No upcoming events in your area</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="createChallengeModal" tabindex="-1" aria-labelledby="createChallengeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createChallengeModalLabel">Create New Challenge</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="challengeForm">
+                    <div class="mb-3">
+                        <label for="challengeName" class="form-label">Challenge Name</label>
+                        <input type="text" class="form-control" id="challengeName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="challengeDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="challengeDescription" rows="2"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="challengeType" class="form-label">Challenge Type</label>
+                            <select class="form-select" id="challengeType" required>
+                                <option value="steps">Steps</option>
+                                <option value="calories">Calories Burned</option>
+                                <option value="workouts">Workout Count</option>
+                                <option value="minutes">Workout Minutes</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="challengeGoal" class="form-label">Goal</label>
+                            <input type="number" class="form-control" id="challengeGoal" min="1" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="challengeStart" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="challengeStart" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="challengeEnd" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="challengeEnd" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Challenge Visibility</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="challengeVisibility" id="visibilityFriends" value="friends" checked>
+                            <label class="form-check-label" for="visibilityFriends">Friends Only</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="challengeVisibility" id="visibilityCommunity" value="community">
+                            <label class="form-check-label" for="visibilityCommunity">Community (Anyone can join)</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveChallengeBtn">Create Challenge</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="joinChallengeModal" tabindex="-1" aria-labelledby="joinChallengeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="joinChallengeModalLabel">Join Challenge</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="challengeDetails">
+                    <h5 id="modalChallengeName">Challenge Name</h5>
+                    <p id="modalChallengeDescription">Challenge description will appear here.</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Type:</strong> <span id="modalChallengeType">Steps</span></p>
+                            <p><strong>Goal:</strong> <span id="modalChallengeGoal">10,000</span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Start:</strong> <span id="modalChallengeStart">2023-10-15</span></p>
+                            <p><strong>End:</strong> <span id="modalChallengeEnd">2023-10-22</span></p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <p><strong>Current Participants:</strong> <span id="modalChallengeParticipants">5</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="confirmJoinBtn">Join Challenge</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/challenges.js') }}"></script>
+{% endblock %}
