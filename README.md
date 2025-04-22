@@ -86,31 +86,6 @@ HealthAndFitnessApp/
 
 ---
 
-## Screenshots
-
-> _Add screenshots of the dashboard, workout tracker, and nutrition tracker here for better presentation._
-
----
-
-## Customization
-
-- **Add More Foods/Exercises:**  
-  Edit food_database.js and workout_database.js.
-
-- **Change Goals:**  
-  Update default goals in data.js or allow users to set them in the UI.
-
----
-
-## Credits
-
-- **Bootstrap** for responsive design.
-- **Font Awesome** for icons.
-- **Chart.js** for charts.
-- Developed by [Your Name] for [Your College]'s Mini Project.
-
----
-
 ## License
 
 This project is for educational purposes only.
